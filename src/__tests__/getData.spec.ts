@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest'
 import { getData } from '../getData';
 describe('first test', () => {
   it('getData', () => {
