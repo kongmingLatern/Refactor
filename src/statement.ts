@@ -7,6 +7,7 @@ export function statement(invoice, plays) {
     currency: "USD",
     minimumFractionDigits: 2
   }).format;
+
   for (let perf of invoice.performances) {
     const play = plays[perf.playID];
     let thisAmount = 0;

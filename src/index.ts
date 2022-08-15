@@ -5,6 +5,6 @@ import {
 
 const [invoices, plays] = getData()
 
-const result = statement(invoices, plays);
+const result = statement(invoices[0], plays);
 
 console.log(result);
