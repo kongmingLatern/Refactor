@@ -1,7 +1,7 @@
 import {
   getData,
   statement
-} from "./statement.js";
+} from "./statement";
 const [invoices, plays] = getData()
 
 console.log(invoices, plays);
