@@ -1,9 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { getData } from '../getData';
-describe('first test', () => {
-  it('getData', () => {
-    const [invoices, plays] = getData();
-    expect(invoices).toEqual([{
+import { statement } from '../statement';
+describe('statement', () => {
+  it('happy path', () => {
+    const invoices = {
       "customer": "BigCo",
       "performances": [{
         "playID": "hamlet",
@@ -18,9 +17,8 @@ describe('first test', () => {
         "audience": 40
       }
       ]
-    }]
-    )
-    expect(plays).toEqual({
+    }
+    const plays = {
       "hamlet": {
         "name": "Hamlet",
         "type": "tragedy"
@@ -33,7 +31,9 @@ describe('first test', () => {
         "name": "Othello",
         "type": "tragedy"
       }
+
     }
-    )
+    const result = statement(invoices, plays)
+    expect(result).toMatchSnapshot()
   })
 })
