@@ -1,9 +1,14 @@
+interface statementType {
+  customer?: string
+}
 export function statement(invoice, plays) {
-  return renderPlainText(invoice, plays)
+  const statementData: statementType = {}
+  statementData.customer = invoice.customer
+  return renderPlainText(statementData, invoice, plays)
 }
 
 
-function renderPlainText(invoice, plays) {
+function renderPlainText(data, invoice, plays) {
   // calculate total amount for this invoice
   function amountFor(aPerformance: any) {
     let result = 0;
@@ -68,7 +73,7 @@ function renderPlainText(invoice, plays) {
     }
     return result;
   }
-  let result = `Statement for ${invoice.customer}\n`;
+  let result = `Statement for ${data.customer}\n`;
 
   for (let perf of invoice.performances) {
     result += `${playFor(perf).name}: ${usd(amountFor(perf) / 100)} (${perf.audience} seats)\n`
