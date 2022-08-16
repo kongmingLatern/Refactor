@@ -1,14 +1,16 @@
 interface statementType {
   customer?: string
+  performances?: Record<string, any>
 }
 export function statement(invoice, plays) {
   const statementData: statementType = {}
   statementData.customer = invoice.customer
-  return renderPlainText(statementData, invoice, plays)
+  statementData.performances = invoice.performances
+  return renderPlainText(statementData, plays)
 }
 
 
-function renderPlainText(data, invoice, plays) {
+function renderPlainText(data, plays) {
   // calculate total amount for this invoice
   function amountFor(aPerformance: any) {
     let result = 0;
@@ -59,7 +61,7 @@ function renderPlainText(data, invoice, plays) {
   // calculate total volumeCredits
   function totalVolumeCredits() {
     let result = 0;
-    for (let perf of invoice.performances) {
+    for (let perf of data.performances) {
       result += volumeCreditsFor(perf);
     }
     return result;
@@ -68,14 +70,14 @@ function renderPlainText(data, invoice, plays) {
   // calculate total amount
   function appleSauce() {
     let result = 0;
-    for (let perf of invoice.performances) {
+    for (let perf of data.performances) {
       result += amountFor(perf);
     }
     return result;
   }
   let result = `Statement for ${data.customer}\n`;
 
-  for (let perf of invoice.performances) {
+  for (let perf of data.performances) {
     result += `${playFor(perf).name}: ${usd(amountFor(perf) / 100)} (${perf.audience} seats)\n`
   }
 
