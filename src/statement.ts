@@ -3,6 +3,8 @@ interface playType {
 }
 interface performancesType {
   play: playType,
+  amount: number,
+  volumeCredits: number,
   playID: string,
   audience: number
 }
@@ -19,16 +21,14 @@ export function statement(invoice, plays) {
   function enrichPerformance(aPerformance) {
     const result = Object.assign({}, aPerformance);
     result.play = playFor(result)
+    result.amount = amountFor(result)
+    result.volumeCredits = volumeCreditsFor(result)
     return result
   }
   // In order to remove temporary variable, so we can extract the variable to function 
   function playFor(aPerformance) {
     return plays[aPerformance.playID]
   }
-
-}
-
-function renderPlainText(data: statementType, plays: any) {
   // calculate total amount for this invoice
   function amountFor(aPerformance: any) {
     let result = 0;
@@ -50,7 +50,6 @@ function renderPlainText(data: statementType, plays: any) {
     }
     return result;
   }
-
   // calculate amount of this volume
   function volumeCreditsFor(aPerformance: any) {
     let result = 0
@@ -61,6 +60,9 @@ function renderPlainText(data: statementType, plays: any) {
     }
     return result
   }
+}
+
+function renderPlainText(data: statementType, plays: any) {
 
   // The function assigned to a temporary variable  (mean: currency) 
   function usd(aNumber) {
@@ -75,16 +77,15 @@ function renderPlainText(data: statementType, plays: any) {
   function totalVolumeCredits() {
     let result = 0;
     for (let perf of data.performances!) {
-      result += volumeCreditsFor(perf);
+      result += perf.volumeCredits;
     }
     return result;
   }
-
   // calculate total amount
   function appleSauce() {
     let result = 0;
     for (let perf of data.performances!) {
-      result += amountFor(perf);
+      result += perf.amount;
     }
     return result;
   }
@@ -92,7 +93,7 @@ function renderPlainText(data: statementType, plays: any) {
   let result = `Statement for ${data.customer}\n`;
 
   for (let perf of data.performances!) {
-    result += `${perf.play.name}: ${usd(amountFor(perf) / 100)} (${perf.audience} seats)\n`
+    result += `${perf.play.name}: ${usd(perf.amount / 100)} (${perf.audience} seats)\n`
   }
 
   result += `Amount owed is ${usd(appleSauce() / 100)}\n`
