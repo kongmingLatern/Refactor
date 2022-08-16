@@ -37,7 +37,7 @@ export function statement(invoice, plays) {
     return result
   }
 
-  // The function assigned to a temporary variable 
+  // The function assigned to a temporary variable  (mean: currency) 
   function usd(aNumber) {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -46,7 +46,7 @@ export function statement(invoice, plays) {
     }).format(aNumber);
   }
 
-  // calculate total amount of this volumeCredits
+  // calculate total volumeCredits
   function totalVolumeCredits() {
     let volumeCredits = 0;
     for (let perf of invoice.performances) {
@@ -55,16 +55,23 @@ export function statement(invoice, plays) {
     return volumeCredits;
   }
 
+  // calculate total amount
+  function appleSauce() {
+    let totalAmount = 0;
+    for (let perf of invoice.performances) {
+      totalAmount += amountFor(perf);
+    }
+    return totalAmount;
+  }
+
   let result = `Statement for ${invoice.customer}\n`;
-  let totalAmount = 0;
 
 
   for (let perf of invoice.performances) {
     result += `${playFor(perf).name}: ${usd(amountFor(perf) / 100)} (${perf.audience} seats)\n`
-    totalAmount += amountFor(perf)
   }
 
-  result += `Amount owed is ${usd(totalAmount / 100)}\n`
+  result += `Amount owed is ${usd(appleSauce() / 100)}\n`
   result += `You earned ${totalVolumeCredits()} credits\n`
 
   return result
