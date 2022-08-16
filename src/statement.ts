@@ -26,6 +26,7 @@ export function statement(invoice, plays) {
     return plays[aPerformance.playID]
   }
 
+  // calculate total amount of this volume
   function volumeCreditsFor(aPerformance: any) {
     let result = 0
     result += Math.max(aPerformance.audience - 30, 0);
@@ -36,15 +37,19 @@ export function statement(invoice, plays) {
     return result
   }
 
+  // The function assigned to a temporary variable 
+  function format(aNumber) {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2
+    }).format(aNumber);
+  }
+
   let result = `Statement for ${invoice.customer}\n`;
   let totalAmount = 0;
   let volumeCredits = 0;
 
-  let format = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2
-  }).format;
 
   for (let perf of invoice.performances) {
 
