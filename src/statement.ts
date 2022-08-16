@@ -1,8 +1,8 @@
 export function statement(invoice, plays) {
   // calculate total amount for this invoice
-  function amountFor(play: any, aPerformance: any) {
+  function amountFor(aPerformance: any) {
     let result = 0;
-    switch (play.type) {
+    switch (playFor(aPerformance).type) {
       case "tragedy":
         result = 40000;
         if (aPerformance.audience > 30) {
@@ -16,11 +16,12 @@ export function statement(invoice, plays) {
         }
         break;
       default:
-        throw new Error(`unknown type: ${play.type}`);
+        throw new Error(`unknown type: ${playFor(aPerformance).type}`);
     }
     return result;
   }
 
+  // In order to remove temporary variable, so we can extract the variable to function 
   function playFor(aPerformance) {
     return plays[aPerformance.playID]
   }
@@ -35,16 +36,20 @@ export function statement(invoice, plays) {
   }).format;
 
   for (let perf of invoice.performances) {
-    let thisAmount = amountFor(playFor(perf), perf);
+
+    let thisAmount = amountFor(perf);
+
     volumeCredits += Math.max(perf.audience - 30, 0)
+
     if ("comedy" === playFor(perf).type) volumeCredits += Math.floor(perf.audience / 5)
 
     result += `${playFor(perf).name}: ${format(thisAmount / 100)} (${perf.audience} seats)\n`
 
     totalAmount += thisAmount
   }
+
   result += `Amount owed is ${format(totalAmount / 100)}\n`
   result += `You earned ${volumeCredits} credits\n`
-  return result
 
+  return result
 }
