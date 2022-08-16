@@ -20,6 +20,7 @@ export function statement(invoice, plays) {
     }
     return result;
   }
+
   let result = `Statement for ${invoice.customer}\n`;
   let totalAmount = 0;
   let volumeCredits = 0;
@@ -30,12 +31,11 @@ export function statement(invoice, plays) {
   }).format;
 
   for (let perf of invoice.performances) {
-    const play = plays[perf.playID];
-    let thisAmount = amountFor(play, perf);
+    let thisAmount = amountFor(plays[perf.playID], perf);
     volumeCredits += Math.max(perf.audience - 30, 0)
-    if ("comedy" === play.type) volumeCredits += Math.floor(perf.audience / 5)
+    if ("comedy" === plays[perf.playID].type) volumeCredits += Math.floor(perf.audience / 5)
 
-    result += `${play.name}: ${format(thisAmount / 100)} (${perf.audience} seats)\n`
+    result += `${plays[perf.playID].name}: ${format(thisAmount / 100)} (${perf.audience} seats)\n`
 
     totalAmount += thisAmount
   }
