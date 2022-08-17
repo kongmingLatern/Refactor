@@ -10,14 +10,34 @@ interface performancesType {
 }
 interface statementType {
   customer?: string
-  performances?: Array<performancesType>
+  performances?: Array<performancesType>,
+  totalAmount?: number,
+  totalVolumeCredits?: number
 }
 export function statement(invoice, plays) {
   const statementData: statementType = {}
   statementData.customer = invoice.customer
   statementData.performances = invoice.performances.map(enrichPerformance)
+  statementData.totalAmount = totalAmount(statementData)
+  statementData.totalVolumeCredits = totalVolumeCredits(statementData)
   return renderPlainText(statementData, plays)
 
+  // calculate total volumeCredits
+  function totalVolumeCredits(data) {
+    let result = 0;
+    for (let perf of data.performances!) {
+      result += perf.volumeCredits;
+    }
+    return result;
+  }
+  // calculate total amount
+  function totalAmount(data) {
+    let result = 0;
+    for (let perf of data.performances!) {
+      result += perf.amount;
+    }
+    return result;
+  }
   function enrichPerformance(aPerformance) {
     const result = Object.assign({}, aPerformance);
     result.play = playFor(result)
@@ -73,22 +93,6 @@ function renderPlainText(data: statementType, plays: any) {
     }).format(aNumber);
   }
 
-  // calculate total volumeCredits
-  function totalVolumeCredits() {
-    let result = 0;
-    for (let perf of data.performances!) {
-      result += perf.volumeCredits;
-    }
-    return result;
-  }
-  // calculate total amount
-  function appleSauce() {
-    let result = 0;
-    for (let perf of data.performances!) {
-      result += perf.amount;
-    }
-    return result;
-  }
 
   let result = `Statement for ${data.customer}\n`;
 
@@ -96,8 +100,8 @@ function renderPlainText(data: statementType, plays: any) {
     result += `${perf.play.name}: ${usd(perf.amount / 100)} (${perf.audience} seats)\n`
   }
 
-  result += `Amount owed is ${usd(appleSauce() / 100)}\n`
-  result += `You earned ${totalVolumeCredits()} credits\n`
+  result += `Amount owed is ${usd(data.totalAmount! / 100)}\n`
+  result += `You earned ${data.totalVolumeCredits!} credits\n`
 
   return result
 }
