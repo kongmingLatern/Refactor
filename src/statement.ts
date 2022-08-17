@@ -14,15 +14,19 @@ interface statementType {
   totalAmount?: number,
   totalVolumeCredits?: number
 }
+
 export function statement(invoice, plays) {
+  return renderPlainText(createStatementData(invoice, plays))
+}
+
+function createStatementData(invoice, plays) {
   const statementData: statementType = {}
   statementData.customer = invoice.customer
   statementData.performances = invoice.performances.map(enrichPerformance)
   statementData.totalAmount = totalAmount(statementData)
   statementData.totalVolumeCredits = totalVolumeCredits(statementData)
-  return renderPlainText(statementData, plays)
+  return statementData
 
-  // calculate total volumeCredits
   function totalVolumeCredits(data) {
     return data.performances.reduce((volume, perf) => volume + perf.volumeCredits, 0)
   }
@@ -74,7 +78,8 @@ export function statement(invoice, plays) {
   }
 }
 
-function renderPlainText(data: statementType, plays: any) {
+
+function renderPlainText(data: statementType) {
 
   // The function assigned to a temporary variable  (mean: currency) 
   function usd(aNumber) {
