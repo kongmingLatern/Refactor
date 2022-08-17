@@ -1,12 +1,12 @@
 import { statementType } from "./type"
 
 export function createStatementData(invoice, plays) {
-  const statementData: statementType = {}
-  statementData.customer = invoice.customer
-  statementData.performances = invoice.performances.map(enrichPerformance)
-  statementData.totalAmount = totalAmount(statementData)
-  statementData.totalVolumeCredits = totalVolumeCredits(statementData)
-  return statementData
+  const result: statementType = {}
+  result.customer = invoice.customer
+  result.performances = invoice.performances.map(enrichPerformance)
+  result.totalAmount = totalAmount(result)
+  result.totalVolumeCredits = totalVolumeCredits(result)
+  return result
 
   function totalVolumeCredits(data) {
     return data.performances.reduce((volume, perf) => volume + perf.volumeCredits, 0)
