@@ -12,11 +12,7 @@ class PerformanceCalculator {
     let result = 0
     switch (this.play.type) {
       case "tragedy":
-        result = 40000
-        if (this.performance.audience > 30) {
-          result += 1000 * (this.performance.audience - 30)
-        }
-        break;
+        throw "bad thing"
       case "comedy":
         result = 30000
         if (this.performance.audience > 20) {
@@ -39,6 +35,19 @@ class PerformanceCalculator {
     return result
   }
 }
+
+class TragedyCalculator extends PerformanceCalculator {
+  get amount() {
+    let result = 40000
+    if (this.performance.audience > 30) {
+      result += 1000 * (this.performance.audience - 30)
+    }
+    return result
+  }
+}
+class ComedyCalculator extends PerformanceCalculator {
+
+}
 export function createStatementData(invoice, plays) {
   const result: statementType = {}
   result.customer = invoice.customer
@@ -55,7 +64,7 @@ export function createStatementData(invoice, plays) {
     return data.performances.reduce((total, perf) => total + perf.amount, 0)
   }
   function enrichPerformance(aPerformance) {
-    const calculator = new PerformanceCalculator(aPerformance, playFor(aPerformance))
+    const calculator = createPerformanceCalculator(aPerformance, playFor(aPerformance))
     const result = Object.assign({}, aPerformance);
     result.play = calculator.play
     result.amount = calculator.amount
@@ -65,5 +74,16 @@ export function createStatementData(invoice, plays) {
   // In order to remove temporary variable, so we can extract the variable to function 
   function playFor(aPerformance) {
     return plays[aPerformance.playID]
+  }
+}
+
+function createPerformanceCalculator(aPerformance, aPlay) {
+  switch (aPlay.type) {
+    case "tragedy":
+      return new TragedyCalculator(aPerformance, aPlay)
+    case "comedy":
+      return new ComedyCalculator(aPerformance, aPlay)
+    default:
+      throw new Error(`unknown type: ${aPlay.type}`)
   }
 }
