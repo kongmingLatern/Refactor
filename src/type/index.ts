@@ -1,6 +1,7 @@
 
 export interface playType {
-  name: string;
+  name: string,
+  type: string
 }
 export interface performancesType {
   play: playType,
