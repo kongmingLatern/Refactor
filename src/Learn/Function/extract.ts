@@ -1,3 +1,11 @@
+/**
+ * 
+ * 提炼函数 
+ * 
+ * 对于只用过一次的函数来说，可以保持内联（inline）状态
+ * 
+ * @param invoice Object
+ */
 function printOwing(invoice) {
   printBanner()
   let outstanding = calculateOutstanding();
