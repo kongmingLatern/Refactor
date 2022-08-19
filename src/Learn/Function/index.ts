@@ -1,11 +1,11 @@
-function printOwing(invoice) {
-  let outstanding = calculateOutstanding(invoice);
+function printOwing1(invoice) {
+  let outstanding = calculateOutstanding1(invoice);
 
   // print detail
   console.log(`name ${invoice.name}`);
   console.log(`amount ${outstanding}`);
 
 }
-function calculateOutstanding(invoice) {
+function calculateOutstanding1(invoice) {
   return undefined;
 }

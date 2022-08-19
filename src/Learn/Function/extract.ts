@@ -6,7 +6,7 @@
  * 
  * @param invoice Object
  */
-function printOwing(invoice) {
+function printOwing2(invoice) {
   printBanner()
   let outstanding = calculateOutstanding();
 
