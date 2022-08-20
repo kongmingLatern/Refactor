@@ -8,7 +8,7 @@
  */
 function printOwing2(invoice) {
   printBanner()
-  let outstanding = calculateOutstanding();
+  let outstanding = calculateOutstanding_demo();
 
   printDetail(outstanding);
 
@@ -19,10 +19,10 @@ function printOwing2(invoice) {
   }
 }
 
-function printBanner() {
-  // Something print
+function calculateOutstanding_demo(): any {
+  return undefined;
 }
 
-function calculateOutstanding() {
-  return undefined;
+function printBanner() {
+  // Something print
 }
