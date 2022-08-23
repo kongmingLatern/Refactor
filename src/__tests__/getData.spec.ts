@@ -1,4 +1,5 @@
-import { getData } from '../getData';
+import { getData } from "../Begin/getData";
+
 describe('first test', () => {
   it('getData', () => {
     const [invoices, plays] = getData();
