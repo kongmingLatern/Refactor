@@ -1,4 +1,3 @@
-
 export interface playType {
   name: string,
   type: string
