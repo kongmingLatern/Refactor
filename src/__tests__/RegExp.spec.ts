@@ -17,7 +17,7 @@ describe('test emial', () => {
     let email_test2 = '@qq.com'
     let email_test3 = '123123123@qq'
 
-    const reg = /^[\w-]+@[\w-]+\.(com|org|cc|cn|net)$/i
+    const reg = /^[\w-]+(@[\w-]+\.)(com|org|cc|cn|net)$/i
     expect(email_test1.match(reg)[0]).toBe('1923212@qq.com')
     expect(email_test2.match(reg)).toBe(null)
     expect(email_test3.match(reg)).toBe(null)
