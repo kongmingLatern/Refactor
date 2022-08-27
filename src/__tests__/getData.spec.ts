@@ -1,39 +1,40 @@
-import { getData } from "../Begin/getData";
+import { getData } from '../Begin/getData'
 
 describe('first test', () => {
   it('getData', () => {
-    const [invoices, plays] = getData();
-    expect(invoices).toEqual([{
-      "customer": "BigCo",
-      "performances": [{
-        "playID": "hamlet",
-        "audience": 55
-      },
+    const [invoices, plays] = getData()
+    expect(invoices).toEqual([
       {
-        "playID": "as-like",
-        "audience": 35
+        customer: 'BigCo',
+        performances: [
+          {
+            playID: 'hamlet',
+            audience: 55,
+          },
+          {
+            playID: 'as-like',
+            audience: 35,
+          },
+          {
+            playID: 'othello',
+            audience: 40,
+          },
+        ],
       },
-      {
-        "playID": "othello",
-        "audience": 40
-      }
-      ]
-    }]
-    )
+    ])
     expect(plays).toEqual({
-      "hamlet": {
-        "name": "Hamlet",
-        "type": "tragedy"
+      hamlet: {
+        name: 'Hamlet',
+        type: 'tragedy',
       },
-      "as-like": {
-        "name": "As You Like It",
-        "type": "comedy"
+      'as-like': {
+        name: 'As You Like It',
+        type: 'comedy',
       },
-      "othello": {
-        "name": "Othello",
-        "type": "tragedy"
-      }
-    }
-    )
+      othello: {
+        name: 'Othello',
+        type: 'tragedy',
+      },
+    })
   })
 })
