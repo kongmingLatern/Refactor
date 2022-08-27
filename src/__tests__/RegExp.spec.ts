@@ -1,15 +1,25 @@
-import { describe, expect, it } from 'vitest'
 describe('First RegExp', () => {
   it('Atomic', () => {
     let s = `<h1>asdfjioasdf</h1>
   <h2>bhds</h2>
 `
-
     let reg = /<(h[1-6])>([\s\S]*)<\/\1>/i
-    console.dir(s.match(reg))
 
     expect((s.match(reg) as any)[0]).toBe('<h1>asdfjioasdf</h1>')
     expect((s.match(reg) as any)[1]).toBe('h1')
     expect((s.match(reg) as any)[2]).toBe('asdfjioasdf')
+  })
+})
+
+describe('test emial', () => {
+  it('email test', () => {
+    let email_test1 = '1923212@qq.com'
+    let email_test2 = '@qq.com'
+    let email_test3 = '123123123@qq'
+
+    const reg = /^[\w-]+@[\w-]+\.(com|org|cc|cn|net)$/i
+    expect(email_test1.match(reg)[0]).toBe('1923212@qq.com')
+    expect(email_test2.match(reg)).toBe(null)
+    expect(email_test3.match(reg)).toBe(null)
   })
 })
