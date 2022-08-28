@@ -23,3 +23,28 @@ describe('test emial', () => {
     expect(email_test3.match(reg)).toBe(null)
   })
 })
+
+describe('No Recording Group', () => {
+  it('match address', () => {
+    let hd = `
+      https://www.baidu.com
+    `
+
+    let reg = /https:\/\/(\w+.\w+\.(com|org|cn))/
+
+    expect(hd.match(reg)[0]).toBe('https://www.baidu.com')
+    expect(hd.match(reg)[1]).toBe('www.baidu.com')
+    expect(hd.match(reg)[2]).toBe('com')
+  })
+  it('get domain', () => {
+    let hd = `
+      https://www.baidu.com
+    `
+
+    let reg = /https:\/\/(\w+.\w+\.(?:com|org|cn))/
+
+    expect(hd.match(reg)[0]).toBe('https://www.baidu.com')
+    expect(hd.match(reg)[1]).toBe('www.baidu.com')
+    expect(hd.match(reg)[2]).toBe(undefined)
+  })
+})
