@@ -74,3 +74,27 @@ describe('check password', () => {
     expect(regs.every(reg => reg.test(password_2))).toBeTruthy()
   })
 })
+
+describe('Stop greed', () => {
+  it('get tag innerHTML and put this text become red', () => {
+    const main = `
+      <span>123123123</span>
+      <span>abc</span>
+      <span>cjoi</span>
+      <span>bbb]qwe</span>
+    `
+
+    // ? 用来限定个数为 1个
+    let reg = /<span>([\s\S]+?)<\/span>/gi
+    let result = main.replace(reg, (v, p1) => {
+      return `<h4>${p1}</h4>`
+    })
+    console.log(result)
+    expect(result).toBe(`
+      <h4>123123123</h4>
+      <h4>abc</h4>
+      <h4>cjoi</h4>
+      <h4>bbb]qwe</h4>
+    `)
+  })
+})
