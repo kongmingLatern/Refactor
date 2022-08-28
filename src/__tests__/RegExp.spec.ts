@@ -65,7 +65,7 @@ describe('No Recording Group', () => {
 })
 
 describe('check password', () => {
-  it('password strong', () => {
+  it('Password should have number, letters and capital letters', () => {
     const password_1 = '123456'
     const password_2 = 'aaA123'
     // 字母或数字开头，后接4-9位数字或字母，必须有大写字母以及数字
