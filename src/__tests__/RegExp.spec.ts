@@ -98,3 +98,13 @@ describe('Stop greed', () => {
     `)
   })
 })
+describe('test $&', () => {
+  it('replace xxx to ?', () => {
+    let str = '===xxx???'
+    // 注意
+    // $` 是指的是 匹配的内容的 前一部分
+    // $' 是指的是 匹配的内容的 后一部分
+    const result = str.replace(/xxx/g, "$'$&$`")
+    expect(result).toBe('===???xxx===???')
+  })
+})
