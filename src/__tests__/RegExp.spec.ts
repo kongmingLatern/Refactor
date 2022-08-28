@@ -30,7 +30,7 @@ describe('No Recording Group', () => {
       https://www.baidu.com
     `
 
-    let reg = /https:\/\/(\w+.\w+\.(com|org|cn))/
+    let reg = /https:\/\/(\w+\.\w+\.(com|org|cn))/
 
     expect(hd.match(reg)[0]).toBe('https://www.baidu.com')
     expect(hd.match(reg)[1]).toBe('www.baidu.com')
@@ -41,10 +41,25 @@ describe('No Recording Group', () => {
       https://www.baidu.com
     `
 
-    let reg = /https:\/\/(\w+.\w+\.(?:com|org|cn))/
+    let reg = /https:\/\/(\w+\.\w+\.(?:com|org|cn))/
 
     expect(hd.match(reg)[0]).toBe('https://www.baidu.com')
     expect(hd.match(reg)[1]).toBe('www.baidu.com')
     expect(hd.match(reg)[2]).toBe(undefined)
+  })
+  it('get All domain', () => {
+    let hd = `
+      https://www.baidu.com
+      https://www.aaa.com
+      https://bbb.com
+    `
+
+    let reg = /https?:\/\/((?:\w+\.)?\w+\.(?:com|org|cn))/gi
+    let res = []
+    let temp
+    while ((temp = reg.exec(hd))) {
+      res.push(temp[1])
+    }
+    expect(res).toEqual(['www.baidu.com', 'www.aaa.com', 'bbb.com'])
   })
 })
