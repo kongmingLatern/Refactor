@@ -63,3 +63,14 @@ describe('No Recording Group', () => {
     expect(res).toEqual(['www.baidu.com', 'www.aaa.com', 'bbb.com'])
   })
 })
+
+describe('check password', () => {
+  it('password strong', () => {
+    const password_1 = '123456'
+    const password_2 = 'aaA123'
+    // 字母或数字开头，后接4-9位数字或字母，必须有大写字母以及数字
+    const regs = [/^[a-z0-9]\w{5,10}$/i, /[A-Z]/, /[0-9]/]
+    expect(regs.every(reg => reg.test(password_1))).toBeFalsy()
+    expect(regs.every(reg => reg.test(password_2))).toBeTruthy()
+  })
+})
