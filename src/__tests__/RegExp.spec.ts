@@ -89,7 +89,6 @@ describe('Stop greed', () => {
     let result = main.replace(reg, (v, p1) => {
       return `<h4>${p1}</h4>`
     })
-    console.log(result)
     expect(result).toBe(`
       <h4>123123123</h4>
       <h4>abc</h4>
@@ -106,5 +105,25 @@ describe('test $&', () => {
     // $' 是指的是 匹配的内容的 后一部分
     const result = str.replace(/xxx/g, "$'$&$`")
     expect(result).toBe('===???xxx===???')
+  })
+})
+describe('get Address by ?<=', () => {
+  it('get Address', () => {
+    const str = `
+      百度:https://www.baidu.com
+      腾讯:http://www.qq.com
+      新浪:https://www.sina.com
+    `
+
+    let reg = /(?<=百度:)(https?:\/\/(\w+\.)?\w+\.(?:com|cn))/gi
+
+    expect(str.match(reg)[0]).toBe('https://www.baidu.com')
+
+    let reg_1 = /(?<=腾讯:)(https?:\/\/(\w+\.)?\w+\.(?:com|cn))/gi
+
+    expect(str.match(reg_1)[0]).toBe('http://www.qq.com')
+
+    let reg_2 = /(?<=新浪:)(https?:\/\/(\w+\.)?\w+\.(?:com|cn))/gi
+    expect(str.match(reg_2)[0]).toBe('https://www.sina.com')
   })
 })
