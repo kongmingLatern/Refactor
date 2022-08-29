@@ -109,6 +109,8 @@ describe('test $&', () => {
 })
 describe('get Address by ?<=', () => {
   it('get Address', () => {
+    // ?<=xxx 意思是 前面必须是 xxx 才会匹配
+    // 例如 x只有在y后面才匹配，必须写成/(?<=y)x/
     const str = `
       百度:https://www.baidu.com
       腾讯:http://www.qq.com
