@@ -129,3 +129,11 @@ describe('get Address by ?<=', () => {
     expect(str.match(reg_2)[0]).toBe('https://www.sina.com')
   })
 })
+
+describe('getFileName', () => {
+  it('get Filename', () => {
+    const str = 'https://123123/123/123/abc.jpg'
+    const reg = /\/((\w+)\.(\w+))$/g
+    expect(str.match(reg)[0]).toBe('/abc.jpg')
+  })
+})
